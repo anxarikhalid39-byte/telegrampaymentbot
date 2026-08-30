@@ -1,0 +1,82 @@
+{
+    "payments": {
+        "ORD-EB390150": {
+            "order_id": "ORD-EB390150",
+            "user_id": 6216003983,
+            "first_name": "⏤͟͟͞͞• 𓆩𓆩🇰𝗵𝗮𝗹𝗶𝗱 𝗵𝗮𝘀𝗮𝗻𓆪𓆪 ⏤͟͞➤⃟🔥✘",
+            "username": "k4_king9",
+            "plan_key": "plan_499",
+            "plan": "₹499 — Lifetime",
+            "amount": 499,
+            "status": "rejected",
+            "created_at": "30-08-2026 12:19 PM UTC",
+            "expiry": "",
+            "file_unique_id": "AQADpBJrG7XSoVR-",
+            "rejected_at": "30-08-2026 12:20 PM UTC"
+        },
+        "ORD-6D40BD1F": {
+            "order_id": "ORD-6D40BD1F",
+            "user_id": 6216003983,
+            "username": "k4_king9",
+            "name": "⏤͟͟͞͞• 𓆩𓆩🇰𝗵𝗮𝗹𝗶𝗱 𝗵𝗮𝘀𝗮𝗻𓆪𓆪 ⏤͟͞➤⃟🔥✘",
+            "plan": "1 Month",
+            "amount": 199,
+            "days": 30,
+            "status": "rejected",
+            "created_at": "30-08-2026 18:17:37",
+            "expiry": null,
+            "screenshot_id": "AgACAgUAAxkBAAMhapQUqefXrinyeBe20PVN5SvJF2oAAkISaxu10qFUzs7Ngb23H-EBAAMCAAN5AAM9BA",
+            "screenshot_time": "30-08-2026 18:17:51",
+            "rejected_at": "30-08-2026 18:18:07"
+        },
+        "ORD-44B354A7": {
+            "order_id": "ORD-44B354A7",
+            "user_id": 6216003983,
+            "username": "k4_king9",
+            "name": "⏤͟͟͞͞• 𓆩𓆩🇰𝗵𝗮𝗹𝗶𝗱 𝗵𝗮𝘀𝗮𝗻𓆪𓆪 ⏤͟͞➤⃟🔥✘",
+            "plan": "Lifetime",
+            "amount": 499,
+            "days": null,
+            "status": "rejected",
+            "created_at": "30-08-2026 18:28:01",
+            "expiry": null,
+            "screenshot_id": "AgACAgUAAxkBAANUapQo6Yi0MWPHafR8ilj8oFmaqlIAArASaxu10qFUxO9YYyvrO44BAAMCAAN5AAM9BA",
+            "screenshot_time": "30-08-2026 18:28:17",
+            "approved_at": null,
+            "rejected_at": "30-08-2026 18:28:33"
+        },
+        "ORD-1DAF4DD1": {
+            "order_id": "ORD-1DAF4DD1",
+            "user_id": 6216003983,
+            "username": "k4_king9",
+            "name": "⏤͟͟͞͞• 𓆩𓆩🇰𝗵𝗮𝗹𝗶𝗱 𝗵𝗮𝘀𝗮𝗻𓆪𓆪 ⏤͟͞➤⃟🔥✘",
+            "plan": "Lifetime",
+            "amount": 499,
+            "days": null,
+            "status": "approved",
+            "created_at": "30-08-2026 18:28:38",
+            "expiry": "Lifetime",
+            "screenshot_id": "AgACAgUAAxkBAANUapQo6Yi0MWPHafR8ilj8oFmaqlIAArASaxu10qFUxO9YYyvrO44BAAMCAAN5AAM9BA",
+            "screenshot_time": "30-08-2026 18:28:48",
+            "approved_at": "30-08-2026 18:28:53",
+            "rejected_at": null
+        },
+        "ORD-F542D3C1": {
+            "order_id": "ORD-F542D3C1",
+            "user_id": 6216003983,
+            "username": "k4_king9",
+            "name": "⏤͟͟͞͞• 𓆩𓆩🇰𝗵𝗮𝗹𝗶𝗱 𝗵𝗮𝘀𝗮𝗻𓆪𓆪 ⏤͟͞➤⃟🔥✘",
+            "plan": "3 Months",
+            "amount": 299,
+            "days": 90,
+            "status": "waiting_screenshot",
+            "created_at": "30-08-2026 18:29:59",
+            "expiry": null,
+            "screenshot_id": null,
+            "screenshot_time": null,
+            "approved_at": null,
+            "rejected_at": null
+        }
+    },
+    "users": {}
+}
