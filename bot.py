@@ -1,7 +1,7 @@
-
+import json
 import os
 import threading
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import uuid
 from datetime import datetime, timedelta
 
@@ -1418,11 +1418,22 @@ class HealthHandler(BaseHTTPRequestHandler):
 
 def start_health_server():
     port = int(os.environ.get("PORT", "10000"))
-    server = HTTPServer(("0.0.0.0", port), HealthHandler)
+    server = ThreadingHTTPServer(("0.0.0.0", port), HealthHandler)
+    server.daemon_threads = True
     server.serve_forever()
 
 
 def main():
+
+    # Render Web Service health server.
+    # It must start BEFORE the Telegram polling loop so Render can
+    # detect the PORT immediately.
+    health_thread = threading.Thread(
+        target=start_health_server,
+        name="health-server",
+        daemon=True,
+    )
+    health_thread.start()
 
     app = (
         Application
