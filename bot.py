@@ -1,4 +1,4 @@
-import json
+
 import os
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -1402,7 +1402,7 @@ async def error_handler(
 
 
 # =========================================================
-# RENDER HEALTH SERVER
+# MAIN
 # =========================================================
 
 class HealthHandler(BaseHTTPRequestHandler):
@@ -1413,7 +1413,7 @@ class HealthHandler(BaseHTTPRequestHandler):
         self.wfile.write(b"MyPayment Bot is running")
 
     def log_message(self, format, *args):
-        pass
+        return
 
 
 def start_health_server():
@@ -1421,10 +1421,6 @@ def start_health_server():
     server = HTTPServer(("0.0.0.0", port), HealthHandler)
     server.serve_forever()
 
-
-# =========================================================
-# MAIN
-# =========================================================
 
 def main():
 
@@ -1512,8 +1508,6 @@ def main():
         "================================"
     )
 
-
-    threading.Thread(target=start_health_server, daemon=True).start()
 
     app.run_polling()
 
