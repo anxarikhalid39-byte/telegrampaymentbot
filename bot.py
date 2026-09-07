@@ -914,7 +914,18 @@ async def admin_action(
                 text=receipt,
 
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("🔗 Join Premium Channel", url=CHANNEL_LINK)]
+                    [
+                        InlineKeyboardButton(
+                            "🔗 Join Premium Channel",
+                            url=CHANNEL_LINK
+                        )
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            "🏠 Main Menu",
+                            callback_data="back_home"
+                        )
+                    ]
                 ])
 
             )
@@ -1426,6 +1437,11 @@ def start_health_server():
 
 
 def main():
+
+    threading.Thread(
+        target=start_health_server,
+        daemon=True
+    ).start()
 
     app = (
         Application
