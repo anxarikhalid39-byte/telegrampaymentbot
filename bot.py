@@ -1,7 +1,7 @@
 import json
 import os
 import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import uuid
 from datetime import datetime, timedelta
 
@@ -25,6 +25,7 @@ ADMIN_ID = 7864269692
 
 QR_FILE = "qr.jpg"
 DATA_FILE = "payments.json"
+CHANNEL_LINK = "https://t.me/+HE6ew2OiiO02OWE9"
 
 
 # =========================================================
@@ -912,7 +913,9 @@ async def admin_action(
 
                 text=receipt,
 
-                reply_markup=main_menu()
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔗 Join Premium Channel", url=CHANNEL_LINK)]
+                ])
 
             )
 
@@ -1418,22 +1421,11 @@ class HealthHandler(BaseHTTPRequestHandler):
 
 def start_health_server():
     port = int(os.environ.get("PORT", "10000"))
-    server = ThreadingHTTPServer(("0.0.0.0", port), HealthHandler)
-    server.daemon_threads = True
+    server = HTTPServer(("0.0.0.0", port), HealthHandler)
     server.serve_forever()
 
 
 def main():
-
-    # Render Web Service health server.
-    # It must start BEFORE the Telegram polling loop so Render can
-    # detect the PORT immediately.
-    health_thread = threading.Thread(
-        target=start_health_server,
-        name="health-server",
-        daemon=True,
-    )
-    health_thread.start()
 
     app = (
         Application
