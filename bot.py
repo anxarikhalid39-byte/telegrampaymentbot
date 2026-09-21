@@ -24,6 +24,7 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 ADMIN_ID = 7864269692
 
 QR_FILE = "qr.jpg"
+PLAN_IMAGE_FILE = "plans.jpg"
 DATA_FILE = "payments.json"
 CHANNEL_LINK = "https://t.me/+HE6ew2OiiO02OWE9"
 
@@ -33,21 +34,21 @@ CHANNEL_LINK = "https://t.me/+HE6ew2OiiO02OWE9"
 # =========================================================
 
 PLANS = {
-    "plan_199": {
+    "plan_99": {
         "name": "1 Month",
-        "price": 199,
+        "price": 99,
         "days": 30,
     },
 
-    "plan_299": {
+    "plan_199": {
         "name": "3 Months",
-        "price": 299,
+        "price": 199,
         "days": 90,
     },
 
-    "plan_499": {
+    "plan_299": {
         "name": "Lifetime",
-        "price": 499,
+        "price": 299,
         "days": None,
     },
 }
@@ -157,22 +158,22 @@ def plans_menu():
 
         [
             InlineKeyboardButton(
-                "💎 ₹199 — 1 Month",
+                "💎 ₹99 — 1 Month",
+                callback_data="plan_99"
+            )
+        ],
+
+        [
+            InlineKeyboardButton(
+                "💎 ₹199 — 3 Months",
                 callback_data="plan_199"
             )
         ],
 
         [
             InlineKeyboardButton(
-                "💎 ₹299 — 3 Months",
+                "💎 ₹299 — Lifetime",
                 callback_data="plan_299"
-            )
-        ],
-
-        [
-            InlineKeyboardButton(
-                "💎 ₹499 — Lifetime",
-                callback_data="plan_499"
             )
         ],
 
@@ -185,6 +186,7 @@ def plans_menu():
     ]
 
     return InlineKeyboardMarkup(keyboard)
+
 
 
 # =========================================================
@@ -242,16 +244,27 @@ async def plans_command(
     context: ContextTypes.DEFAULT_TYPE
 ):
 
-    await update.message.reply_text(
-
+    caption = (
         "💎 PREMIUM PLANS\n\n"
-        "🟢 ₹199 — 1 Month\n"
-        "🟢 ₹299 — 3 Months\n"
-        "🟢 ₹499 — Lifetime\n\n"
-        "👇 Apna plan select karein:",
-
-        reply_markup=plans_menu()
+        "🟢 ₹99 — 1 Month\n"
+        "🟢 ₹199 — 3 Months\n"
+        "🟢 ₹299 — Lifetime\n\n"
+        "👇 Apna plan select karein:"
     )
+
+    if os.path.exists(PLAN_IMAGE_FILE):
+        with open(PLAN_IMAGE_FILE, "rb") as image:
+            await update.message.reply_photo(
+                photo=image,
+                caption=caption,
+                reply_markup=plans_menu()
+            )
+    else:
+        await update.message.reply_text(
+            caption + "\n\n⚠️ Plan image nahi mili.\n"
+            "Bot folder mein `plans.jpg` file rakhein.",
+            reply_markup=plans_menu()
+        )
 
 
 # =========================================================
@@ -396,32 +409,51 @@ async def show_plans(
     context: ContextTypes.DEFAULT_TYPE
 ):
 
-    message = (
-
+    caption = (
         "💎 PREMIUM PLANS\n\n"
-
-        "🟢 ₹199 — 1 Month\n"
-        "🟢 ₹299 — 3 Months\n"
-        "🟢 ₹499 — Lifetime\n\n"
-
+        "🟢 ₹99 — 1 Month\n"
+        "🟢 ₹199 — 3 Months\n"
+        "🟢 ₹299 — Lifetime\n\n"
         "👇 Apna plan select karein:"
     )
 
     query = update.callback_query
 
     if query:
+        try:
+            await query.message.delete()
+        except Exception:
+            pass
 
-        await query.edit_message_text(
-            message,
-            reply_markup=plans_menu()
-        )
+        if os.path.exists(PLAN_IMAGE_FILE):
+            with open(PLAN_IMAGE_FILE, "rb") as image:
+                await query.message.chat.send_photo(
+                    photo=image,
+                    caption=caption,
+                    reply_markup=plans_menu()
+                )
+        else:
+            await query.message.chat.send_message(
+                caption + "\n\n⚠️ Plan image nahi mili.\n"
+                "Bot folder mein `plans.jpg` file rakhein.",
+                reply_markup=plans_menu()
+            )
 
     else:
+        if os.path.exists(PLAN_IMAGE_FILE):
+            with open(PLAN_IMAGE_FILE, "rb") as image:
+                await update.message.reply_photo(
+                    photo=image,
+                    caption=caption,
+                    reply_markup=plans_menu()
+                )
+        else:
+            await update.message.reply_text(
+                caption + "\n\n⚠️ Plan image nahi mili.\n"
+                "Bot folder mein `plans.jpg` file rakhein.",
+                reply_markup=plans_menu()
+            )
 
-        await update.message.reply_text(
-            message,
-            reply_markup=plans_menu()
-        )
 
 
 # =========================================================
@@ -1035,30 +1067,29 @@ async def admin_action(
 
         try:
 
-            await context.bot.send_message(
-
-                chat_id=user_id,
-
-                text=(
-
-                    "❌ PAYMENT REJECTED\n\n"
-
-                    f"🧾 Old Order ID: {order_id}\n\n"
-
-                    "Aapka payment screenshot "
-                    "verify nahi ho saka.\n\n"
-
-                    "⚠️ Koi problem nahi — aap "
-                    "dobara payment kar sakte hain.\n\n"
-
-                    "👇 Neeche se plan select karein. "
-                    "Aapko NEW Order ID milega."
-
-                ),
-
-                reply_markup=plans_menu()
-
+            rejection_text = (
+                "❌ PAYMENT REJECTED\n\n"
+                f"🧾 Old Order ID: {order_id}\n\n"
+                "Aapka payment screenshot verify nahi ho saka.\n\n"
+                "⚠️ Koi problem nahi — aap dobara payment kar sakte hain.\n\n"
+                "👇 Neeche se plan select karein. "
+                "Aapko NEW Order ID milega."
             )
+
+            if os.path.exists(PLAN_IMAGE_FILE):
+                with open(PLAN_IMAGE_FILE, "rb") as image:
+                    await context.bot.send_photo(
+                        chat_id=user_id,
+                        photo=image,
+                        caption=rejection_text,
+                        reply_markup=plans_menu()
+                    )
+            else:
+                await context.bot.send_message(
+                    chat_id=user_id,
+                    text=rejection_text,
+                    reply_markup=plans_menu()
+                )
 
         except Exception:
 
